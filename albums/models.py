@@ -18,5 +18,8 @@ class Album(models.Model):
 
     cost = models.DecimalField(max_digits=5, decimal_places=2, blank=False, null=False)
 
+    def __str__(self):
+        return self.album_name
+
     class Meta:
         db_table = "Albums"
