@@ -6,8 +6,7 @@ from albums.forms import AlbumForm
 class AlbumAdmin(admin.ModelAdmin):
     form = AlbumForm
 
-    # list_display = ['date_created']
-    readonly_fields = ('date_created',)
+    readonly_fields = ('created','modified')
 
 
 
