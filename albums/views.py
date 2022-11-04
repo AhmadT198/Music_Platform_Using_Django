@@ -12,7 +12,7 @@ class album(View):
         print(request.user)
         # print(request.user.get_all_permissions())
         # print(Permission.objects.all())
-        if (request.user.has_perm('albums.view_album')): ## If the current User has permission to view the Album Data
+        if (request.user.is_authenticated and request.user.has_perm('albums.view_album')): ## If the current User has permission to view the Album Data
 
             ## Get Queryset and prepare its format then return it in JSON format
             data = Album.objects.all()
@@ -25,7 +25,7 @@ class album(View):
 
     def post(self, request):
         print(request.user)
-        if request.user.has_perm('albums.add_album'): ### If the current User the permission to ADD data to the Album Model
+        if request.user.is_authenticated and request.user.has_perm('albums.add_album'): ### If the current User the permission to ADD data to the Album Model
             try:
                 ## Pass the data to the AlbumForm
                 data = AlbumForm(json.loads(request.body))
