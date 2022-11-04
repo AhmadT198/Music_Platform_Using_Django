@@ -12,6 +12,6 @@ class AlbumTabular(admin.TabularInline):
 class ArtistAdmin(admin.ModelAdmin):
     form = ArtistForm
     list_display = ['stage_name', 'social_media_link', 'approved_albums_count']
-    inlines = [AlbumTabular]
+
     def approved_albums_count(self, obj):
         return obj.albums.filter(approved=True).count()
