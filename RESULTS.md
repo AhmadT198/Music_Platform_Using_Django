@@ -91,6 +91,9 @@ Album.objects.all().order_by("cost","album_name")
 <QuerySet [<Album: Noata Beda>, <Album: Roma>, <Album: The Marshall Mathers LP>]>
 
 
+## Order Artists according to Number of Approved albums
+>>> Artist.objects.all().annotate(approved_albums=Count('albums__approved')).order_by('-approved_albums')
+<QuerySet [<Artist: Cairokee>, <Artist: Eminem>, <Artist: Adele>, <Artist: Drake>, <Artist: Frank Sinatra>]>
 
 
 
