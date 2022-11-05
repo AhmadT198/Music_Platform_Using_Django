@@ -1,6 +1,5 @@
 from django.urls import path, include
-
-from albums.views import album
+from .views import *
 
 urlpatterns = [
     path('', album.as_view())

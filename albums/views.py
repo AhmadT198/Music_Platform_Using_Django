@@ -2,9 +2,10 @@ import json
 from django.core import serializers
 from django.http import JsonResponse
 from django.views import View
-from albums.forms import *
+from .forms import *
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.models import Permission
+from .models import *
 
 class album(View):
 
