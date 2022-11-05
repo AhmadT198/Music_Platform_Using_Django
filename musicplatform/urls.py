@@ -15,14 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
 
+from . import settings
 from .login import *
 from .logout import *
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('artists/', include('artists.urls')),
-    path('albums/', include('albums.urls')),
-    path('login/', Login.as_view()),
-    path('logout/', Logout.as_view())
-]
+                  path('admin/', admin.site.urls),
+                  path('artists/', include('artists.urls')),
+                  path('albums/', include('albums.urls')),
+                  path('login/', Login.as_view()),
+                  path('logout/', Logout.as_view()),
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
