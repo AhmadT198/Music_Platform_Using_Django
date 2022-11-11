@@ -16,12 +16,12 @@ class Album(TimeStampedModel):
 
     album_name = models.CharField(max_length=500, default="New Album")
 
-    artist = models.ForeignKey(Artist,null=False, blank=False, related_name="albums",
+    artist = models.ForeignKey(Artist, related_name="albums",
                                on_delete=models.CASCADE)
 
-    album_release_date = models.DateTimeField(null=False, blank=False, default=timezone.now)
+    album_release_date = models.DateTimeField(default=timezone.now)
 
-    cost = models.DecimalField(max_digits=5, decimal_places=2, blank=False, null=False)
+    cost = models.DecimalField(max_digits=5, decimal_places=2)
     approved = models.BooleanField(default=False, null=False)
 
     approved_only = ApprovedAlbumsManager() ## Defining Custom Manager
