@@ -5,6 +5,12 @@ from artists.models import Artist
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
+class ApprovedAlbumsManager(models.Manager):
+    ''' Custom Manager to Display only Approved Albums '''
+    def get_queryset(self):
+        return super().get_queryset().filter(approved=True)
+
+
 class Album(TimeStampedModel):
     album_id = models.AutoField(primary_key=True)
 
@@ -17,6 +23,9 @@ class Album(TimeStampedModel):
 
     cost = models.DecimalField(max_digits=5, decimal_places=2, blank=False, null=False)
     approved = models.BooleanField(default=False, null=False)
+
+    approved_only = ApprovedAlbumsManager() ## Defining Custom Manager
+
     def __str__(self):
         return self.album_name
 

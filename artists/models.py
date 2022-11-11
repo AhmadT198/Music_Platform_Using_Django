@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 
 class Artist(models.Model):
     artist_id = models.AutoField(primary_key=True)
@@ -8,6 +10,7 @@ class Artist(models.Model):
 
     social_media_link = models.URLField(max_length=200, null=False, blank=True)
 
+    user = models.OneToOneField(User, related_name="artist_info", on_delete=models.SET_NULL, null=True)
     def __str__(self):
         return self.stage_name
 
