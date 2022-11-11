@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'knox',
     'django_filters',
-
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -152,7 +152,6 @@ REST_KNOX = {
 # Celery settings
 CELERY_BROKER_URL = "redis://127.0.0.1:6379"
 CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379"
-
 
 ## Email Settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
