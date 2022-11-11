@@ -97,8 +97,7 @@ class AlbumView_ManualFilters(AlbumView):
     serializer_class = AlbumSerializer
 
     def get(self, request):
-        params = dict(request.query_params)
-        print(params)
+        params = dict(request.query_params) ##Extracting Query Parameters
         queryset = Album.approved_only.all()
 
 
