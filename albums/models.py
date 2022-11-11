@@ -17,7 +17,7 @@ class Album(TimeStampedModel):
     album_name = models.CharField(max_length=500, default="New Album")
 
     artist = models.ForeignKey(Artist, related_name="albums",
-                               on_delete=models.CASCADE)
+                               on_delete=models.CASCADE, null=True)
 
     album_release_date = models.DateTimeField(default=timezone.now)
 
