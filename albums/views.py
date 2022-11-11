@@ -10,7 +10,6 @@ from .serializers import *
 class AlbumView(GenericAPIView):
     queryset = Album.approved_only.all()
     serializer_class = AlbumSerializer
-    # pagination_class = AlbumPagination
 
     def get(self, request):
         ## Preparing Paginator
@@ -23,5 +22,5 @@ class AlbumView(GenericAPIView):
 
 
 
-def post(self, request):
-   pass
+    def post(self, request):
+        pass
