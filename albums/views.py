@@ -1,5 +1,7 @@
 import json
 from django.core import serializers
+import django_filters
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import GenericAPIView
@@ -9,6 +11,17 @@ from .models import *
 from .serializers import *
 
 
+class AlbumFilter(django_filters.FilterSet):  ## Album Filtering Class
+    cost = django_filters.NumberFilter()
+    cost__gte = django_filters.NumberFilter(field_name='cost', lookup_expr='gte')
+    cost__lte = django_filters.NumberFilter(field_name='cost', lookup_expr='lte')
+    album_name = django_filters.CharFilter(lookup_expr='icontains')
+
+    class Meta:
+        model = Album
+        fields = ['cost','album_name']
+
+
 class AlbumView(GenericAPIView):
     queryset = Album.approved_only.all()
     serializer_class = AlbumSerializer
@@ -16,11 +29,12 @@ class AlbumView(GenericAPIView):
     def get(self, request):
         ## Preparing Paginator
         paginator = AlbumPagination()
+        filtered = AlbumFilter(request.GET, Album.approved_only.all()) ## Pass the data to a filter
 
         ## Displaying Paginated Data
-        query = paginator.paginate_queryset(queryset=Album.approved_only.all(), request= request)
+        query = paginator.paginate_queryset(queryset=filtered.qs , request= request)
         data = AlbumSerializer(query, many=True)
-        return paginator.get_paginated_response(data.data, status.HTTP_200_OK)
+        return paginator.get_paginated_response(data.data)
 
 
 
