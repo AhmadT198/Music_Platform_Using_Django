@@ -19,7 +19,7 @@ class album(View):
             data = Album.objects.all()
             data = serializers.serialize('json', data)
             data = json.loads(data)
-            return JsonResponse(data, safe=False)
+            return JsonResponse(data, safe=False,status=200)
 
         else: ## Else Raise an exception if the user is unauthorized
             raise PermissionDenied
@@ -33,7 +33,7 @@ class album(View):
                 if data.is_valid(): ## If the data is Valid, Save it and return the added data
                     data.save()
                     return JsonResponse(data.data, status=200)
-                return JsonResponse(data.errors, status=422) ## Else return any existing Errors
+                return JsonResponse(data.errors, status=400) ## Else return any existing Errors
 
             except Exception as e:
                 return JsonResponse({"message" : str(e)}, status=500)

@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render
 from knox.auth import TokenAuthentication
 from knox.models import AuthToken
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import mixins, permissions, status
@@ -19,6 +20,9 @@ from .serializers import *
 
 class Register(APIView):
     '''Class based View to handle registeration through the endpoint /authentication/register '''
+
+    authentication_classes = []
+    permission_classes = []
 
     def post(self, request, *args, **kwargs):
         data = RegisterSerializer(data=request.data)  ## Pass the request body to the UserSerializer
@@ -85,6 +89,7 @@ class Login(KnoxLoginView):
 
 
 class Logout(KnoxLogoutView):
+    permission_classes = [IsAuthenticated]
     def post(self, request, format=None):
         request._auth.delete() ## Delete the Current User's token
         user_logged_out.send(sender=request.user.__class__,
@@ -93,6 +98,7 @@ class Logout(KnoxLogoutView):
 
 
 class LogoutAll(KnoxLogoutAllView):
+    permission_classes = [IsAuthenticated]
     def post(self, request, format=None):
         request.user.auth_token_set.all().delete() ## Delete all current User's tokens, to close all sessions
         user_logged_out.send(sender=request.user.__class__,
@@ -102,6 +108,7 @@ class LogoutAll(KnoxLogoutAllView):
 
 class UserAPI(APIView):
 
+    permission_classes = [IsAuthenticated]
     def get(self, request, *args, **kwargs):
         pk = kwargs['pk']
         try:
@@ -140,7 +147,7 @@ class UserAPI(APIView):
                 user.save()
 
                 return Response(data.data, status=status.HTTP_200_OK) ## Return the Updated Data
-            return Response(data.errors) ## Return Form Errors
+            return Response(data.errors, status=status.HTTP_400_BAD_REQUEST) ## Return Form Errors
 
         except Exception as e:
             return Response({"message": "User Not Found !"}, status=status.HTTP_404_NOT_FOUND)
@@ -167,6 +174,6 @@ class UserAPI(APIView):
                 user.save()
 
                 return Response(data.data, status=status.HTTP_200_OK)## Return the Updated Data
-            return Response(data.errors) ## Return Form Errors
+            return Response(data.errors,status=status.HTTP_400_BAD_REQUEST) ## Return Form Errors
         except Exception as e:
             return Response({"message": "User Not Found !"}, status=status.HTTP_404_NOT_FOUND)

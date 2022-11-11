@@ -20,6 +20,6 @@ class artist(APIView):
             if data.is_valid():  ## if it is Valid
                 data.save()  ## Save and return the new data
                 return Response(data.data, status.HTTP_200_OK)
-            return Response(data.errors, status=status.HTTP_406_NOT_ACCEPTABLE)  ## if not valid, return the errors
+            return Response(data.errors, status=status.HTTP_400_BAD_REQUEST)  ## if not valid, return the errors
         except Exception as e:
             return Response({"message": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
