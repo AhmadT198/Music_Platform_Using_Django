@@ -15,15 +15,10 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://code.bld.ai/ahmadqazamel/django-training.git
+git remote add origin https://github.com/AhmadT198/Music_Platform_Using_Django.git
 git branch -M main
 git push -uf origin main
 ```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://code.bld.ai/ahmadqazamel/django-training/-/settings/integrations)
-
 ## Collaborate with your team
 
 - [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
